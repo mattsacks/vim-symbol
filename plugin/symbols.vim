@@ -22,8 +22,9 @@ function! s:sortShort(thing, thang)
        \ l:thingLen > l:thangLen ? 1 : -1 
 endfunction
 
-function! s:sortLowest(thing, thang)
-    return a:thing - a:thang
+" sorts a dictionary based on the lower value of a key
+function! s:sortLowest(thing, thang) dict
+    return self[a:thing] - self[a:thang]
 endfunction
 
 function! s:fuzzysub(str)
@@ -58,7 +59,11 @@ function! s:GatherSymbols()
     " if the line matches a symbol and is indented one or two levels down
     if l:indent == 2 && l:linestr =~ "^\\s\\+'\\=\\w\\+:"
       let l:symbol = matchstr(l:linestr, "^\\s\\+'\\=\\zs\\w\\+\\>\\ze") 
-      let b:symbols_gathered[l:symbol] = l:line
+      if exists('l:symbol')
+        let b:symbols_gathered[l:symbol] = l:line
+      elseif
+        echom 'not found ' . l:symbol
+      endif
     endif
   endfor
 endfunction
@@ -74,7 +79,8 @@ function! s:SymbolGlob(arg,cmdline,cursorpos)
 
   " if the user just hit tab with no symbol to search for
   if empty(a:arg)
-    return l:symbols
+    " sort the symbols by line number
+    return sort(l:symbols, "s:sortLowest", b:symbols_gathered)
   endif
 
   " a fuzzy expression of the search
