@@ -16,10 +16,10 @@ function! s:sortAlpha(thing, thang)
 endfunction
 
 function! s:sortShort(thing, thang)
-  let l:thingLen = len(a:thing)
-  let l:thangLen = len(a:thang)
-  return l:thingLen == l:thangLen ? 0 :
-       \ l:thingLen > l:thangLen ? 1 : -1 
+  let thingLen = len(a:thing)
+  let thangLen = len(a:thang)
+  return thingLen == thangLen ? 0 :
+       \ thingLen > thangLen ? 1 : -1 
 endfunction
 
 " sorts a dictionary based on the lower value of a key
@@ -76,21 +76,21 @@ function! s:SymbolGlob(arg,cmdline,cursorpos)
   endif
 
   " the symbols
-  let l:symbols = keys(b:symbols_gathered)
+  let symbols = keys(b:symbols_gathered)
 
   " if the user just hit tab with no symbol to search for
   if empty(a:arg)
     " sort the symbols by line number
-    return sort(l:symbols, "s:sortLowest", b:symbols_gathered)
+    return sort(symbols, "s:sortLowest", b:symbols_gathered)
   endif
 
   " a fuzzy expression of the search
-  let l:fuzzyArg = s:fuzzysub(a:arg)
+  let fuzzyArg = s:fuzzysub(a:arg)
 
   " filter the symbols based on the arg
-  let l:symbols = filter(l:symbols, 'v:val =~ l:fuzzyArg')
+  let symbols = filter(symbols, 'v:val =~ fuzzyArg')
   " return a sorted list with shortest symbol first
-  return sort(copy(l:symbols), "s:sortShort")
+  return sort(copy(symbols), "s:sortShort")
 endfunction
 
 " gets passed the argument when executed
@@ -100,15 +100,15 @@ function! s:Symbol(symbol, ...)
     return ''
   endif
 
-  let l:symbols = s:SymbolGlob(a:symbol, '', '')
+  let symbols = s:SymbolGlob(a:symbol, '', '')
 
   " if no symbols found
-  if empty(l:symbols)
+  if empty(symbols)
     return ''
   endif
 
   " get the first one's line number
-  call cursor(b:symbols_gathered[l:symbols[0]], 0)
+  call cursor(b:symbols_gathered[symbols[0]], 0)
   return ''
 endfunction
 
