@@ -108,7 +108,7 @@ function! s:Symbol(symbol, ...)
   endif
 
   " get the first one's line number
-  call cursor(b:symbols_gathered[symbols[0]], 0)
+  call cursor(b:symbols_gathered[symbols[0]], 1)
   return ''
 endfunction
 
@@ -122,5 +122,29 @@ augroup SymbolList
   autocmd BufReadPost * call s:GatherSymbols()
   autocmd InsertLeave * call s:GatherSymbols()
 augroup END
+
+" check to see if a filetype has a 
+function! s:addToExisting(ft, pattern)
+  if !exists('g:symbol_patterns')
+    let g:symbol_patterns = {}
+    let g:symbol_patterns[a:ft] = [a:pattern]
+    return ''
+  endif
+
+  if exists('g:symbol_patterns[a:ft]')
+    call add(g:symbol_patterns[a:ft], a:pattern)
+  else
+    let g:symbol_patterns[a:ft] = [a:pattern]
+  endif
+endfunction
+
+" match a symbol in a vim file is the name of any top-level function
+call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
+" match a symbol in js/coffee is any object key of indent levels 1-4
+call s:addToExisting('javascript', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
+call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
+" match anything nested 0-3 levels deep in sass and scss
+call s:addToExisting('scss', "^\\s\\{0,3}\\zs\\S\\{-}\\ze\\s{")
+call s:addToExisting('sass', "^\\s\\{0,3}\\zs\\S\\{-}\\ze\\s{")
 
 " vim:ft=vim:fdm=marker:
