@@ -57,19 +57,21 @@ So this is a hash with a key 'javascript' that has an array (list) of things to
 match on each line in a javascript file. The pattern might seem complex so I'll
 break it down:
 
-`^` - From the start of the line
-`\s\{0,3}` - Between 0 and 3 spaces
-`\zs` - Start matching what we want to define as a **symbol**
-`\w\+` - Any amount of word characters...
-`\ze` - Stop matching what we want to match as the symbol for this line
-`:` - And make sure there's a trailing `:` on the line after the word characters
+| Atom       | Whats goin on                                                              |
+| ---------- | -------------------------------------------------------------------------- |
+| `^`        | From the start of the line                                                 |
+| `\s\{0,3}` | Between 0 and 3 spaces                                                     |
+| `\zs`      | Start matching what we want to define as a **symbol**                      |
+| `\w\+`     | Any amount of word characters...                                           |
+| `\ze`      | Stop matching what we want to match as the symbol for this line            |
+| `:`        | And make sure there's a trailing `:` on the line after the word characters |
 
-In a sense, we've define a pattern that not only captures a symbol but also
+In a sense, we've defined a pattern that not only captures a symbol but also
 defines it.
 
 There are a couple of default definitions provided to you. I don't really know
-if they're even useful or not but I find them convenient. Available are
-definitions for `vim`,`javascript`,`coffee`, and `sass` + `scss` files.
+if they're even useful or not but I find them convenient. Default definitions
+are for `vim`,`javascript`,`coffee`, and `sass` + `scss` filetypes.
 
 #### License
 The MIT License
