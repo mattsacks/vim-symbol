@@ -32,13 +32,18 @@ function! s:fuzzysub(str)
 endfunction
 " END utilities }}}
 
-" current filetypes i use
+" current filetypes supported in the pattern dictionary
 function! s:checkFiletype()
-  return &ft =~ '\(javascript\|coffee\)'
+  return exists('g:symbol_patterns[&ft]')
 endfunction
 
 " gather symbols on bufread
 function! s:GatherSymbols()
+  " whether it's even supported
+  if !s:checkFiletype()
+    return ''
+  endif
+
   " clear existing symbols
   if exists('b:symbols_gathered')
     unlet b:symbols_gathered
@@ -46,32 +51,28 @@ function! s:GatherSymbols()
 
   let b:symbols_gathered = {}
 
-  " whether it's even supported
-  if !s:checkFiletype()
-    return ''
-  endif
+  let patterns = g:symbol_patterns[&ft]
 
   " match all symbols
-  for l:line in range(0, line('$'))
-    let l:linestr = getline(l:line)
-    let l:indent  = indent(l:line)
+  for line in range(0, line('$'))
+    let linestr = getline(line)
 
-    " if the line matches a symbol and is indented one or two levels down
-    if l:indent == 2 && l:linestr =~ "^\\s\\+'\\=\\w\\+:"
-      let l:symbol = matchstr(l:linestr, "^\\s\\+'\\=\\zs\\w\\+\\>\\ze") 
-      if exists('l:symbol')
-        let b:symbols_gathered[l:symbol] = l:line
-      elseif
-        echom 'not found ' . l:symbol
+    for pattern in patterns
+      if linestr =~ pattern
+        " the symbol that matches the pattern is the key and the value is the
+        " line number
+        let b:symbols_gathered[matchstr(linestr, pattern)] = line
+        " but don't match a single line more than once?
+        break
       endif
-    endif
+    endfor
   endfor
 endfunction
 
 " has to return a list of completion candidates on <TAB>
 function! s:SymbolGlob(arg,cmdline,cursorpos)
   if !s:checkFiletype()
-    throw 'Unavailable for ' . &ft
+    return ''
   endif
 
   " the symbols
@@ -118,9 +119,8 @@ command! -nargs=? -complete=customlist,s:SymbolGlob Symbol
 " autoload that shit
 augroup SymbolList
   autocmd!
-  autocmd BufReadPost *.js,*.coffee call s:GatherSymbols()
-  " TODO add event based on changing the file to re-gather symbols
-  " ie InsertLeave?
+  autocmd BufReadPost * call s:GatherSymbols()
+  autocmd InsertLeave * call s:GatherSymbols()
 augroup END
 
 " vim:ft=vim:fdm=marker:
