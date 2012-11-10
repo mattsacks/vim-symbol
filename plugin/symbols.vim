@@ -144,8 +144,8 @@ call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
 " match a symbol in js/coffee is any object key of indent levels 1-4
 call s:addToExisting('javascript', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
 call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
-" match anything nested 0-3 levels deep in sass and scss
-call s:addToExisting('scss', "^\\s\\{0,3}\\zs\\S\\{-}\\ze\\s{")
-call s:addToExisting('sass', "^\\s\\{0,3}\\zs\\S\\{-}\\ze\\s{")
+" match anything nested 0-4 levels deep in sass and scss
+call s:addToExisting('scss', "^\\s\\{0,4}\\zs\\S\\{-}\\ze\\s{")
+call s:addToExisting('sass', "^\\s\\{0,4}\\zs\\S\\{-}\\ze\\s{")
 
 " vim:ft=vim:fdm=marker:
