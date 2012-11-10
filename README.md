@@ -62,12 +62,12 @@ break it down:
 | `^`        | From the start of the line                                                 |
 | `\s\{0,3}` | Between 0 and 3 spaces                                                     |
 | `\zs`      | Start matching what we want to define as a **symbol**                      |
-| `\w\+`     | Any amount of word characters...                                           |
+| `\w\+`     | At least 1 or more word characters                                         |
 | `\ze`      | Stop matching what we want to match as the symbol for this line            |
 | `:`        | And make sure there's a trailing `:` on the line after the word characters |
 
 In a sense, we've defined a pattern that not only captures a symbol but also
-defines it.
+specifies the syntax of the line to match.
 
 There are a couple of default definitions provided to you. I don't really know
 if they're even useful or not but I find them convenient. Default definitions
