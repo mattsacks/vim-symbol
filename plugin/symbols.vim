@@ -63,7 +63,6 @@ function! s:GatherSymbols()
         " the symbol that matches the pattern is the key and the value is the
         " line number
         let b:symbols_gathered[matchstr(linestr, pattern)] = line
-        " but don't match a single line more than once?
         break
       endif
     endfor
@@ -143,9 +142,9 @@ endfunction
 call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
 " match a symbol in js/coffee is any object key of indent levels 1-4
 call s:addToExisting('javascript', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
-call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
+call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\ze:")
 " match anything nested 0-4 levels deep in sass and scss
 call s:addToExisting('scss', "^\\s\\{0,4}\\zs\\S\\{-}\\ze\\s{")
-call s:addToExisting('sass', "^\\s\\{0,4}\\zs\\S\\{-}\\ze\\s{")
+call s:addToExisting('sass', "^\\s\\{0,4}\\zs\\S\\{-}\\ze$")
 
 " vim:ft=vim:fdm=marker:
