@@ -58,12 +58,18 @@ function! s:GatherSymbols()
   for line in range(0, line('$'))
     let linestr = getline(line)
 
-    for pattern in patterns
-      if linestr =~ pattern
-        " the symbol that matches the pattern is the key and the value is the
+    for Pattern in patterns
+      if type(Pattern) == 1 && linestr =~ Pattern
+        " the symbol that matches the Pattern is the key and the value is the
         " line number
-        let b:symbols_gathered[matchstr(linestr, pattern)] = line
+        let b:symbols_gathered[matchstr(linestr, Pattern)] = line
         break
+      elseif type(Pattern) == 2
+        let ret = Pattern(linestr, line)
+        if ret !~ 0
+          let b:symbols_gathered[ret] = line
+          break
+        endif
       endif
     endfor
   endfor
