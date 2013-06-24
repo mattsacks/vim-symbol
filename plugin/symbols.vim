@@ -1,5 +1,5 @@
 " Symbols.vim - Buffer-local symbol list
-" Version: 0.1
+" Version: 0.2
 " Author: Matt Sacks <matt.s.sacks@gmail.com>
 
 if exists('g:loaded_symbols') || v:version < 700
@@ -118,9 +118,62 @@ function! s:Symbol(symbol, ...)
   return ''
 endfunction
 
+" create a buffer listing all symbols for easy navigation
+function! s:CreateSymbolWindow()
+  " if the window already exists, just go to it
+  " FIXME
+  if exists("t:SymbolWindowOpen") && t:SymbolWindowOpen == 1
+    exe t:SymbolWindowOpen . "wincmd w"
+    return
+  endif
+
+  " create the window and store the win nr
+  let t:SymbolWindowSource = {
+        \ 'filename': bufname('%'),
+        \ 'symbols': b:symbols_gathered
+      \ }
+
+  " create the SymbolList window
+  vnew
+  " get the winnr of the window this was called from
+  let t:SymbolWindowSource.winnr = winnr('#')
+  " set it's status line
+  setl statusline=SymbolList:\ %{t:SymbolWindowSource['filename']}
+  " get the location of the Symbol Window
+  let t:SymbolWindowOpen = winnr()
+
+  " cleanup when the buffer is hidden
+  autocmd BufWinLeave <buffer>
+        \ let t:SymbolWindowOpen = 0 |
+        \ unlet t:SymbolWindowSource
+
+  " when hitting enter, navigate to that symbol in the open buffer
+  nnoremap <buffer> <CR> :call <SID>NavigateFromSymbolWindow()<CR>
+
+  " for each symbol found in the buffer, spit out it's result on a new line
+  let symbols = keys(t:SymbolWindowSource['symbols'])
+  for symbol in symbols
+    call setline(index(symbols, symbol), symbol)
+  endfor
+endfunction
+
+function! s:NavigateFromSymbolWindow()
+  " get the symbol from the current line
+  let symbol = getline('.')
+  " index it's line number
+  let linenr = t:SymbolWindowSource['symbols'][symbol]
+  " navigate back to the source
+  exec t:SymbolWindowSource['winnr'] . 'wincmd w'
+  " and go to the symbol
+  call cursor(linenr, 1)
+endfunction
+
 " Symbol command
 command! -nargs=? -complete=customlist,s:SymbolGlob Symbol
       \ execute s:Symbol(<f-args>)
+
+" SymbolList command
+command! -nargs=0 SymbolList call s:CreateSymbolWindow()
 
 " autoload that shit
 augroup SymbolList
