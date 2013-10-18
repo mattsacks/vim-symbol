@@ -54,20 +54,29 @@ function! s:GatherSymbols()
 
   let patterns = g:symbol_patterns[&ft]
 
+  if exists('g:pre_symbol_gather[&ft]')
+    call g:pre_symbol_gather[&ft]()
+  endif
+
   " match all symbols
   for line in range(0, line('$'))
     let linestr = getline(line)
 
-    for Pattern in patterns
-      if type(Pattern) == 1 && linestr =~ Pattern
+    " first pattern that matches wins
+    for index in range(0, len(patterns)-1)
+      let type = type(patterns[index])
+      if type == 1
+        let match = matchstr(linestr, patterns[index])
         " the symbol that matches the Pattern is the key and the value is the
         " line number
-        let b:symbols_gathered[matchstr(linestr, Pattern)] = line
-        break
-      elseif type(Pattern) == 2
-        let ret = Pattern(linestr, line)
-        if ret !~ 0
-          let b:symbols_gathered[ret] = line
+        if !empty(match)
+          let b:symbols_gathered[match] = line
+          break
+        endif
+      elseif type == 2
+        let match = patterns[index](linestr, line)
+        if match !~ 0
+          let b:symbols_gathered[match] = line
           break
         endif
       endif
@@ -200,7 +209,7 @@ endfunction
 " match a symbol in a vim file is the name of any top-level function
 call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
 " match a symbol in js/coffee is any object key of indent levels 1-4
-call s:addToExisting('javascript', "^\\s\\{1,4}'\\=\\zs\\w\\+\\>\\ze:")
+call s:addToExisting('javascript', "^\\s\\{1,6}'\\=\\zs\\w\\+\\>\\ze:")
 call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\ze:")
 " match anything nested 0-4 levels deep in sass and scss
 call s:addToExisting('scss', "^\\s\\{0,4}\\zs\\S\\{-}\\ze\\s{")
