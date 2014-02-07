@@ -1,14 +1,15 @@
 # symbols.vim
 
-Jump to a matched regular expression. <something something about filetypes?>
+Jump to a matched regular expression. _&lt;something something about filetypes?&gt;_
 
 #### Use
 
-<gif>
+_&lt;gif&gt;_
 
 Use `:Symbol {fuzzy string}` to find any matched symbols in the current buffer and navigate to them.
 
 Built-in filetypes:
+
 * HTML, ERB, Mustache, Handlebars
 * SCSS (with support for nested contexts)
 * JavaScript, CoffeeScript
@@ -36,4 +37,4 @@ Given a filetype and a regular expression, the `:Symbol` command can jump to any
 let g:symbol_patterns['javascript'] = '\.prototype.\zs\w\+ze\ = function'
 ```
 
-<add walkthrough>
+_&lt;add walkthrough&gt;_
