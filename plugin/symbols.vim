@@ -1,5 +1,5 @@
 " Symbols.vim - Buffer-local symbol list
-" Version: 1
+" Version: 1.0
 " Author: Matt Sacks <matt.s.sacks@gmail.com>
 
 if exists('g:loaded_symbols') || v:version < 700
