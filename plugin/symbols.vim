@@ -71,13 +71,13 @@ function! s:GatherSymbols()
         " line number
         if !empty(match)
           let b:symbols_gathered[match] = line
-          break
+          continue
         endif
       elseif type == 2
         let match = patterns[index](linestr, line)
-        if match !~ 0
+        if type(match) == 1
           let b:symbols_gathered[match] = line
-          break
+          continue
         endif
       endif
     endfor
