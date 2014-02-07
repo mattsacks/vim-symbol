@@ -1,74 +1,39 @@
 # symbols.vim
 
-A buffer-local symbol-list that has fuzzy-completion.
-
-#### What
-
-Adds the `:Symbol` command that takes a single argument, whatever symbol you're
-looking to jump to. Can be used in any filetype and match any expression.
+Jump to a matched regular expression. <something something about filetypes?>
 
 #### Use
 
-It wouldn't be Vim if you didn't have to have the right default settings first.
-If you haven't already, make sure you have the `wildmenu` option set (just
-type `:set wildmenu`). Then, use bash-style completion with `:set
-wildmode=list:longest,full`.
+<gif>
 
-Now we can begin.
+Use `:Symbol {fuzzy string}` to find any matched symbols in the current buffer and navigate to them.
 
-After opening up any buffer defined in the `g:symbol_patterns`, type `:Symbol`,
-`<Space>`, and then hit the Tab key. You should see a list showing all the
-different symbols available to jump to. An example:
+Built-in filetypes:
+* HTML, ERB, Mustache, Handlebars
+* SCSS (with support for nested contexts)
+* JavaScript, CoffeeScript
+* Vim
 
-```javascript
-var thing = new Class({
-  initialize: function(options) {
-    /* ... */
-  },
-  attach: function() {
-    /* ... */
-  },
-  render: function() {
-    /* ... */
-  }
-});
-```
+The plugin supports defining your own regular expressions as well.
 
-Would have `initialize`, `attach`, and `render` available in the symbol list.
-These can be completed by typing any letters that match their string in order.
-So `intl` would work for completing `initialize` (and yes, so would just `it` or
-even `i`). You can tab-complete the choice or just hit enter to pick the first
-result.
+#### CtrlP
 
-#### How
+An extension for [CtrlP](https://github.com/kien/ctrlp.vim) is included for quick filtering to the list of gathered symbols in the current buffer.
 
-The interface is the `g:symbol_patterns` dictionary. Vim dictionaries are like
-hashes in any other language, you give it any any and assign it some value.
-
-The `g:symbol_patterns` dictionary can have any filetype as the key and iterates
-through a list of expressions as it's value. Here's what it looks like:
+In your `.vimrc`, add the following:
 
 ```vim
-" somewhere in your .vimrc
-let g:symbol_patterns = { 'javascript': ['^\s\{0,3}\zs\w\+\ze:'] }
+let g:ctrlp_extensions = ['symbol']
 ```
 
-So this is a hash with a key 'javascript' that has an array (list) of things to
-match on each line in a javascript file. The pattern might seem complex so I'll
-break it down:
+The `:CtrlPSymbol` command will be available in any filetype included in `g:symbol_patterns`.
 
-| Atom       | Whats goin on                                                              |
-| ---------- | -------------------------------------------------------------------------- |
-| `^`        | From the start of the line                                                 |
-| `\s\{0,3}` | Between 0 and 3 spaces                                                     |
-| `\zs`      | Start matching what we want to define as a **symbol**                      |
-| `\w\+`     | At least 1 or more word characters                                         |
-| `\ze`      | Stop matching what we want to match as the symbol for this line            |
-| `:`        | And make sure there's a trailing `:` on the line after the word characters |
+#### Adding Definitions
 
-In a sense, we've defined a pattern that not only captures a symbol but also
-specifies the syntax of the line to match.
+Given a filetype and a regular expression, the `:Symbol` command can jump to any line that matches that regular expression.
 
-There are a couple of default definitions provided to you. I don't really know
-if they're even useful or not but I find them convenient. Default definitions
-are for `vim`,`javascript`,`coffee`, and `sass` + `scss` filetypes.
+```vim
+let g:symbol_patterns['javascript'] = '\.prototype.\zs\w\+ze\ = function'
+```
+
+<add walkthrough>
