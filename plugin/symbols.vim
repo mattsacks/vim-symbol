@@ -209,12 +209,12 @@ endfunction
 " match ids and classes in an HTML-like file
 let s:htmlIdPattern = "id=\"\\zs.\\{-}\\ze\""
 let s:htmlClassPattern = "class=\"\\zs.\\{-}\\ze\""
-call s:addToExisting('html', s:htmlIdPattern)
-call s:addToExisting('html', s:htmlClassPattern)
-call s:addToExisting('erb', s:htmlIdPattern)
-call s:addToExisting('erb', s:htmlClassPattern)
-call s:addToExisting('mustache', s:htmlIdPattern)
-call s:addToExisting('mustache', s:htmlClassPattern)
+
+let s:htmlLikeFileTypes = ['html', 'erb', 'mustache', 'handlebars']
+for type in s:htmlLikeFileTypes
+  call s:addToExisting(type, s:htmlIdPattern)
+  call s:addToExisting(type, s:htmlClassPattern)
+endfor
 
 " match a symbol in a vim file is the name of any top-level function
 call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
