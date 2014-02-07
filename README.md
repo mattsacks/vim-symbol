@@ -34,7 +34,9 @@ The `:CtrlPSymbol` command will be available in any filetype included in `g:symb
 Given a filetype and a regular expression, the `:Symbol` command can jump to any line that matches that regular expression.
 
 ```vim
-let g:symbol_patterns['javascript'] = '\.prototype.\zs\w\+ze\ = function'
+let g:symbol_patterns['javascript'] = '\.prototype.\zs\w\+\ze\ = function'
 ```
+
+#### Super super advanced
 
 _&lt;add walkthrough&gt;_
