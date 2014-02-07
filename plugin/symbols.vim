@@ -1,5 +1,5 @@
 " Symbols.vim - Buffer-local symbol list
-" Version: 0.2
+" Version: 1
 " Author: Matt Sacks <matt.s.sacks@gmail.com>
 
 if exists('g:loaded_symbols') || v:version < 700
@@ -190,7 +190,5 @@ augroup SymbolList
   autocmd BufReadPost * call s:GatherSymbols()
   autocmd InsertLeave * call s:GatherSymbols()
 augroup END
-
-" runtime! symbol_definitions.vim
 
 " vim:ft=vim:fdm=marker:
