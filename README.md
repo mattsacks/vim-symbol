@@ -72,6 +72,3 @@ specifies the syntax of the line to match.
 There are a couple of default definitions provided to you. I don't really know
 if they're even useful or not but I find them convenient. Default definitions
 are for `vim`,`javascript`,`coffee`, and `sass` + `scss` filetypes.
-
-#### License
-The MIT License
