@@ -219,7 +219,7 @@ call s:addToExisting('mustache', s:htmlClassPattern)
 " match a symbol in a vim file is the name of any top-level function
 call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
 " match a symbol in js/coffee is any object key of indent levels 1-4
-call s:addToExisting('javascript', "^\\s\\{1,6}'\\=\\zs\\w\\+\\>\\ze:")
+call s:addToExisting('javascript', "function\\s\\+\\zs\\w\\+\\ze\\s\\=(")
 call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\ze:")
 " match anything nested 0-4 levels deep in sass and scss
 call s:addToExisting('scss', "^\\s\\{0,4}\\zs\\S\\{-}\\ze\\s{")
