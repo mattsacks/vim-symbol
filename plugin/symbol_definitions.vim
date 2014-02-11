@@ -29,7 +29,6 @@ call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
 
 " match a symbol in js/coffee is any object key of indent levels 1-4
 call s:addToExisting('javascript', "function\\s\\+\\zs\\w\\+\\ze\\s\\=(")
-call s:addToExisting('javascript', "click")
 call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\ze:")
 
 " match anything nested 0-4 levels deep in sass
