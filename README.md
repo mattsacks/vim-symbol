@@ -2,7 +2,7 @@
 
 Jump to a matched strings via regular expressions with customizable expressions per filetype. Includes a CtrlP extension for fast filtering.
 
-#### Use
+### Use
 
 ![](http://i.imgbox.com/OoLpMwO5.gif)
 
@@ -17,7 +17,7 @@ Built-in filetypes:
 
 See the <a href="#adding-definitions">Adding Definitions</a> section for information on adding additional definitions and filetypes.
 
-#### CtrlP
+### CtrlP
 
 An extension for [CtrlP](https://github.com/kien/ctrlp.vim) is included for quick filtering to the list of gathered symbols in the current buffer.
 
@@ -29,7 +29,7 @@ let g:ctrlp_extensions = ['symbol']
 
 The `:CtrlPSymbol` command will be available in any filetype included in `g:symbol_patterns`.
 
-#### Adding Definitions
+### Adding Definitions
 
 Given a filetype and a regular expression, the `:Symbol` command can jump to any line that matches that regular expression. To add a single expression for one filetype, here's an example of a line from your `.vimrc`:
 
@@ -53,7 +53,7 @@ let g:symbol_patterns = {
 \ }
 ```
 
-#### Function definitions
+### Function definitions
 
 Function defintions are also available, where the first argument will be the line and the second argument will be the line number.
 
@@ -72,6 +72,6 @@ endfunction
 let g:symbol_patterns['scss'] = function('CountIndent')
 ```
 
-#### Feedback
+### Feedback
 
 Let me know what you think, I'm @mattsacks on [Twitter](https://twitter.com/mattsacks) and [GitHub](https://github.com/mattsacks).
