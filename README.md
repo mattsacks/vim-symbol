@@ -15,7 +15,7 @@ Built-in filetypes:
 * JavaScript, CoffeeScript
 * Vim
 
-See the [#adding-definitions](Adding Definitions) section for information on adding additional definitions and filetypes.
+See the <a href="#adding-definitions">Adding Definitions</a> section for information on adding additional definitions and filetypes.
 
 #### CtrlP
 
