@@ -1,6 +1,6 @@
-# symbols.vim
+# symbol.vim
 
-Jump to a matched strings via regular expressions with customizable expressions per filetype. Includes a CtrlP extension for fast filtering.
+Jump to a matched string via regular expressions with customizable expressions per filetype. Includes a CtrlP extension for fast filtering.
 
 ### Use
 

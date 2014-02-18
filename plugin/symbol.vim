@@ -1,11 +1,11 @@
-" Symbols.vim - Buffer-local symbol list
+" Symbol.vim - Buffer-local symbol list
 " Version: 1.0.0
 " Author: Matt Sacks <matt.s.sacks@gmail.com>
 
-if exists('g:loaded_symbols') || v:version < 700
+if exists('g:loaded_symbol') || v:version < 700
   finish
 endif
-let g:loaded_symbols = 1
+let g:loaded_symbol = 1
 
 " utilities {{{
 function! s:gsub(str,pat,rep) abort
