@@ -29,10 +29,15 @@ call s:addToExisting('vim', "^fun\\%(ction\\)\\=!\\=\\s\\zs.\\{-}\\ze(.\\{-})")
 
 " match a symbol in js/coffee is any object key of indent levels 1-4
 call s:addToExisting('javascript', "function\\s\\+\\zs\\w\\+\\ze\\s\\=(")
+call s:addToExisting('javascript', "var\\s\\zs\\w\\{-}\\ze\\s\\==\\s\\=function")
 call s:addToExisting('coffee', "^\\s\\{1,4}'\\=\\zs\\w\\+\\ze:")
 
 " match anything nested 0-4 levels deep in sass
 call s:addToExisting('sass', "^\\s\\{0,4}\\zs\\S\\{-}\\ze$")
+
+" match variables
+call s:addToExisting('scss', "\\%(^\\|\\s\\+\\)\\$.\\{-}\\ze:")
+call s:addToExisting('sass', "\\%(^\\|\\s\\+\\)\\$.\\{-}\\ze:")
 
 " this only works for SCSS (for now) because identifiers are easier to match
 let s:scssSymbolMatch =  "^\\s\\{-}\\zs\\S.\\{-}\\ze\\s\\{-}{"
