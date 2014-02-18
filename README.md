@@ -53,7 +53,7 @@ let g:symbol_patterns = {
 \ }
 ```
 
-### Function definitions
+### Function Definitions
 
 Function defintions are also available, where the first argument will be the line and the second argument will be the line number.
 
