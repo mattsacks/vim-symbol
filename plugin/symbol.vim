@@ -144,6 +144,9 @@ function! s:CreateSymbolWindow()
 
   " create the SymbolList window
   vnew
+
+  setlocal buftype=nofile bufhidden=wipe noswapfile nomodified
+
   " get the winnr of the window this was called from
   let t:SymbolWindowSource.winnr = winnr('#')
   " set it's status line
@@ -164,6 +167,8 @@ function! s:CreateSymbolWindow()
   for symbol in symbols
     call setline(index(symbols, symbol), symbol)
   endfor
+
+  setlocal nomodifiable
 endfunction
 
 function! s:NavigateFromSymbolWindow()
