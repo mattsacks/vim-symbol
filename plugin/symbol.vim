@@ -139,7 +139,7 @@ function! s:CreateSymbolWindow()
   " create the window and store the win nr
   let t:SymbolWindowSource = {
         \ 'filename': bufname('%'),
-        \ 'symbols': b:symbols_gathered
+        \ 'symbols': get(b:, 'symbols_gathered', {})
       \ }
 
   " create the SymbolList window
