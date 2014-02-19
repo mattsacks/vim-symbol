@@ -28,8 +28,3 @@ let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
 function! ctrlp#symbol#id()
   return s:id
 endfunction
-
-" create the CtrlPSymbol command
-command! -nargs=0 CtrlPSymbol
-      \ let s:symbol_buffer = bufname('') |
-      \ call ctrlp#init(ctrlp#symbol#id())

@@ -196,4 +196,9 @@ augroup SymbolList
   autocmd InsertLeave * call s:GatherSymbols()
 augroup END
 
+" create the CtrlPSymbol command
+command! -nargs=0 CtrlPSymbol
+      \ let s:symbol_buffer = bufname('') |
+      \ call ctrlp#init(ctrlp#symbol#id())
+
 " vim:ft=vim:fdm=marker:
