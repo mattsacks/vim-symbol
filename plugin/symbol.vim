@@ -178,7 +178,7 @@ function! s:NavigateFromSymbolWindow()
 endfunction
 
 " Symbol command
-command! -nargs=? -complete=customlist,s:SymbolGlob Symbol
+command! -nargs=+ -complete=customlist,s:SymbolGlob Symbol
       \ execute s:Symbol(<f-args>)
 
 " SymbolList command
