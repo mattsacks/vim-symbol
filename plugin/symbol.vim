@@ -197,8 +197,6 @@ augroup SymbolList
 augroup END
 
 " create the CtrlPSymbol command
-command! -nargs=0 CtrlPSymbol
-      \ let s:symbol_buffer = bufname('') |
-      \ call ctrlp#init(ctrlp#symbol#id())
+command! -nargs=0 CtrlPSymbol call ctrlp#symbol#start(bufname(''))
 
 " vim:ft=vim:fdm=marker:

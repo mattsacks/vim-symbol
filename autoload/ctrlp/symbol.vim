@@ -13,8 +13,21 @@ call add(g:ctrlp_ext_vars, {
 	\ 'type': 'line'
 	\ })
 
+function! ctrlp#symbol#start(bufname)
+  let s:symbol_buffer = a:bufname
+  call ctrlp#init(ctrlp#symbol#id())
+endfunction
+
 function! ctrlp#symbol#init()
+  if exists('s:buf_symbols')
+    unlet s:buf_symbols
+  endif
   let s:buf_symbols = getbufvar(s:symbol_buffer, 'symbols_gathered')
+  let g:hoge = s:symbol_buffer
+  if type(s:buf_symbols) != 4
+    unlet s:buf_symbols
+    let s:buf_symbols = {}
+  endif
   return keys(s:buf_symbols)
 endfunction
 
