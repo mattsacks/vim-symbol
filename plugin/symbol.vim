@@ -139,11 +139,14 @@ function! s:CreateSymbolWindow()
   " create the window and store the win nr
   let t:SymbolWindowSource = {
         \ 'filename': bufname('%'),
-        \ 'symbols': b:symbols_gathered
+        \ 'symbols': get(b:, 'symbols_gathered', {})
       \ }
 
   " create the SymbolList window
   vnew
+
+  setlocal buftype=nofile bufhidden=wipe noswapfile nomodified
+
   " get the winnr of the window this was called from
   let t:SymbolWindowSource.winnr = winnr('#')
   " set it's status line
@@ -164,6 +167,8 @@ function! s:CreateSymbolWindow()
   for symbol in symbols
     call setline(index(symbols, symbol), symbol)
   endfor
+
+  setlocal nomodifiable
 endfunction
 
 function! s:NavigateFromSymbolWindow()
@@ -178,7 +183,7 @@ function! s:NavigateFromSymbolWindow()
 endfunction
 
 " Symbol command
-command! -nargs=? -complete=customlist,s:SymbolGlob Symbol
+command! -nargs=+ -complete=customlist,s:SymbolGlob Symbol
       \ execute s:Symbol(<f-args>)
 
 " SymbolList command
@@ -190,5 +195,8 @@ augroup SymbolList
   autocmd BufReadPost * call s:GatherSymbols()
   autocmd InsertLeave * call s:GatherSymbols()
 augroup END
+
+" create the CtrlPSymbol command
+command! -nargs=0 CtrlPSymbol call ctrlp#symbol#start(bufname(''))
 
 " vim:ft=vim:fdm=marker:
